@@ -41,7 +41,7 @@ public class Product {
     @Column(name = "last_updated",nullable = false)
     @UpdateTimestamp
     private Date lastUpdate;
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "category_id",nullable = false)// Add this annotation to break the circular reference
     private ProductCategory category;
 

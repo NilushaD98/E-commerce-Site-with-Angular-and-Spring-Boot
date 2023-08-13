@@ -1,0 +1,24 @@
+<div class="main-content">
+    <div class="section-content section-content-p30">
+        <div class="container-fluid">
+            <div class="row product-grid">
+                <!-- Loop over the collection of products -->
+                <div *ngFor="let temp of products" class="col-md-4 col-sm-6">
+                    <div class="product-box">
+                      <a routerLink="/products/{{temp.productID}}">
+                        <img src="{{ temp.imageURL }}" class="img-responsive">
+                      </a>
+                      <a routerLink="/products/{{temp.productID}}">
+                        <h1>{{ temp.name }}</h1>
+                      </a>
+                        <div class="price">{{ temp.unitPrice | currency:'USD' }}</div>
+                        <a href="#" class="primary-btn">Add To Cart</a>
+                    </div>
+                </div>
+              <div *ngIf="products.length == 0" class="alert alert-warning col-md-12" role="alert">
+                No Product Found.
+              </div>
+            </div>
+        </div>
+    </div>
+</div>
