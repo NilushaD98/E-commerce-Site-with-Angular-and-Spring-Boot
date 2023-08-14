@@ -25,7 +25,6 @@ public class EcommerceApplication {
 
 		UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
 		source.registerCorsConfiguration("/**", corsConfiguration);
-
 		return new CorsFilter(source);
 	}
 

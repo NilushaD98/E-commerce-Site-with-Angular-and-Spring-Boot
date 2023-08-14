@@ -20,7 +20,6 @@ export class ProductCategoryMenuComponent implements OnInit {
       this.productService.getProductCategories().subscribe(
         (response: StandardResponse) => {
           if(response.code === 200){
-            console.log(response.data)
             this.productCategories = response.data as ProductCategory[];
           }
         }

@@ -47,8 +47,6 @@ export class ProductListComponent implements OnInit {
      this.productService.getProductLit(this.currenCategoryID).subscribe(
        (response: StandardResponse) => {
          if (response.code === 200) {
-           console.log(response.data);
-
            this.products = response.data as Product[];
          } else {
            // Handle error if needed

@@ -1,5 +1,12 @@
 <div class="detail-section">
   <div class="container-fluid">
-    <p style="margin-top: 100px">Product details work</p>
+    <img src="{{product.imageURL}}" class="detail-img">
+    <h3>{{product.name}}</h3>
+    <div class="price">{{product.unitPrice | currency:'USD'}}</div>
+    <a href="#">Add to Cart</a>
+    <hr>
+    <h4>Description</h4>
+    <p>{{product.description}}</p>
+    <a routerLink="/products" class="mt-5">Back to Product List</a>
   </div>
 </div>

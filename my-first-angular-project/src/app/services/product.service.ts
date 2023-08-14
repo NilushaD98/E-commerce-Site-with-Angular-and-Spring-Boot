@@ -29,6 +29,12 @@ export class ProductService {
     return this.httpClient.get<StandardResponse>(searchProductURL);
 
   }
+
+  getProduct(producId: number):Observable<StandardResponse> {
+    const getProductDetailsURL = `${this.baseUrl}products/get_product_by_id/?id=${producId}`
+    return this.httpClient.get<StandardResponse>(getProductDetailsURL);
+
+  }
 }
 
 
