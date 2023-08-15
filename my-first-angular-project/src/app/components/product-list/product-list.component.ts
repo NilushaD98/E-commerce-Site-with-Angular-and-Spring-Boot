@@ -14,19 +14,21 @@ export class ProductListComponent implements OnInit {
   products: Product[] = [];
   currenCategoryID : number =4;
   searchMode: boolean = false;
+
+  thePageNumber:number=0;
+  thePageSize:number = 10;
+  theTotalElemants:number=1;
   constructor(
               private productService: ProductService,
               private route: ActivatedRoute
     ) {
   }
-
   ngOnInit(): void {
     this.route.paramMap.subscribe(
       ()=> {
         this.listProducts();
       }
   );
-
   }
   listProducts() {
     this.searchMode = this.route.snapshot.paramMap.has('keyword');
@@ -44,9 +46,11 @@ export class ProductListComponent implements OnInit {
      }else {
        this.currenCategoryID = 1;
      }
-     this.productService.getProductLit(this.currenCategoryID).subscribe(
+     this.productService.getProductLit(this.thePageNumber-1,this.thePageSize,this.currenCategoryID).subscribe(
        (response: StandardResponse) => {
          if (response.code === 200) {
+           console.log(response.allElemants)
+           this.theTotalElemants =response.allElemants
            this.products = response.data as Product[];
          } else {
            // Handle error if needed
@@ -62,11 +66,10 @@ export class ProductListComponent implements OnInit {
 
   private handleSearchProducts() {
     const  theKeyword : string = this.route.snapshot.paramMap.get('keyword')!;
-    this.productService.searchProducts(theKeyword).subscribe(
+    this.productService.searchProducts(this.thePageNumber-1,this.thePageSize,theKeyword).subscribe(
       (response: StandardResponse) =>{
         if (response.code === 200) {
-          console.log(response.data);
-
+          this.theTotalElemants =response.allElemants
           this.products = response.data as Product[];
         }
       }

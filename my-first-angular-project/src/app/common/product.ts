@@ -9,7 +9,8 @@ export class Product {
         public active: boolean,
         public unitInStock: number,
         public dateCerated: Date,
-        public lastUpdated: Date
+        public lastUpdated: Date,
+
     ){
 
     }

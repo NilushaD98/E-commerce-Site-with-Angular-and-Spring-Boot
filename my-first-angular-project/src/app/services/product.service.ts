@@ -12,9 +12,9 @@ export class ProductService {
   constructor(private httpClient: HttpClient) {
 
    }
-   getProductLit(categoryId: number): Observable<StandardResponse>{
+   getProductLit(page:number,size:number,categoryId: number): Observable<StandardResponse>{
 
-    const searchURL = `${this.baseUrl}products/get_products_category_vice/?id=${categoryId}&page=0&size=10`
+    const searchURL = `${this.baseUrl}products/get_products_category_vice/?id=${categoryId}&page=${page}&size=${size}`
     return this.httpClient.get<StandardResponse>(searchURL);
    }
 
@@ -24,8 +24,8 @@ export class ProductService {
 
   }
 
-  searchProducts(theKeyword: string): Observable<StandardResponse> {
-    const searchProductURL = `${this.baseUrl}products/search_product_by_name/?name=${theKeyword}&page=0&size=50`
+  searchProducts(page:number,size:number,theKeyword: string): Observable<StandardResponse> {
+    const searchProductURL = `${this.baseUrl}products/search_product_by_name/?name=${theKeyword}&page=${page}&size=${size}`
     return this.httpClient.get<StandardResponse>(searchProductURL);
 
   }

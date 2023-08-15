@@ -5,6 +5,7 @@ import com.ecommerce.ecommerce.Entity.ProductCategory;
 import com.ecommerce.ecommerce.dto.ProductDTO;
 import com.ecommerce.ecommerce.dto.request.RequestProductSaveDTO;
 import com.ecommerce.ecommerce.repositoy.ProductCategoryRepo;
+import com.ecommerce.ecommerce.repositoy.ProductRepo;
 import com.ecommerce.ecommerce.service.ProductService;
 import com.ecommerce.ecommerce.util.StandardResponse;
 import javassist.NotFoundException;
@@ -21,12 +22,14 @@ public class ProductController {
 
     @Autowired
     private ProductService productService;
+    @Autowired
+    private ProductRepo productRepo;
 
     @GetMapping(value = "get_all_products")
     public ResponseEntity<StandardResponse> getAllProducts(){
         List<ProductDTO> productList = productService.getAllProducts();
         return new ResponseEntity<StandardResponse>(
-                new StandardResponse(200,"Product List",productList), HttpStatus.ACCEPTED
+                new StandardResponse(200,"Product List",productList,productList.size()), HttpStatus.ACCEPTED
         );
     }
     @PostMapping(value = "product_save")
@@ -43,8 +46,9 @@ public class ProductController {
             @RequestParam(value = "size")int size
     ){
         List<ProductDTO> productDTOList = productService.getProcuctsCategoryVice(categoryId,page,size);
+        long count = productRepo.countItems(categoryId);
         return new ResponseEntity<StandardResponse>(
-                new StandardResponse(200,"Prduct List: ",productDTOList),HttpStatus.ACCEPTED
+                new StandardResponse(200,"Prduct List: ",productDTOList,count),HttpStatus.ACCEPTED
         );
     }
     @GetMapping(
@@ -57,8 +61,9 @@ public class ProductController {
             @RequestParam(value = "size") int size
     ){
         List<ProductDTO> productDTOList = productService.searchProductByName(name,page,size);
+        long count = productRepo.countSearchedItems(name);
         return new ResponseEntity<StandardResponse>(
-                new StandardResponse(200,"Product List of "+name+":",productDTOList),HttpStatus.ACCEPTED
+                new StandardResponse(200,"Product List of "+name+":",productDTOList,count),HttpStatus.ACCEPTED
         );
     }
     @GetMapping(
@@ -68,7 +73,7 @@ public class ProductController {
     public ResponseEntity<StandardResponse> getProductByID(@RequestParam(value = "id")Long id) throws NotFoundException {
         ProductDTO productDTO = productService.getProductbyID(id);
         return new ResponseEntity<StandardResponse>(
-                new StandardResponse(200,"Product Details : ",productDTO),HttpStatus.ACCEPTED
+                new StandardResponse(200,"Product Details : ",productDTO,0),HttpStatus.ACCEPTED
         );
     }
 }

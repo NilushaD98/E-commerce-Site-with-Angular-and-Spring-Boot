@@ -23,4 +23,5 @@ public class ProductDTO {
     private Date dateCreated;
     private Date lastUpdate;
     private Long category;
+
 }

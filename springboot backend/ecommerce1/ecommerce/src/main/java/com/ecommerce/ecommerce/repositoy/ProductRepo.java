@@ -18,10 +18,14 @@ import java.util.List;
 public interface ProductRepo extends JpaRepository<Product,Long> {
     @Query(value = "select id,sku,name,description,unit_price,image_url,category_id from product",nativeQuery = true)
     List<Product> findAllProducts();
-
     @Query(value = "SELECT id, sku, name, description, unit_price, image_url, active, units_in_stock, date_created, last_updated, category_id FROM product WHERE category_id = ?1", nativeQuery = true)
     List<Product> getProductByCategoryId(Long categoryId,PageRequest of);
-
     @Query(value = "select * from product p where p.name like concat('%',?1,'%')",nativeQuery = true)
     List<Product> searchProductByName(String name, PageRequest of);
+
+    @Query(value = "SELECT count(*) FROM product WHERE category_id = ?1", nativeQuery = true)
+    long countItems(Long categoryId);
+
+    @Query(value = "select COUNT(*) from product p where p.name like concat('%',?1,'%')",nativeQuery = true)
+    long countSearchedItems(String name);
 }

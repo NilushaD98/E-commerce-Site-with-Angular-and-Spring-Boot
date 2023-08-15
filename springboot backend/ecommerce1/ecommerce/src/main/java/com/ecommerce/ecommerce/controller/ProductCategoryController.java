@@ -22,7 +22,7 @@ public class ProductCategoryController {
     public ResponseEntity<StandardResponse> getAllCategories(){
         List<ProductCategoryDTO>productCategoryDTOList = productCategoryService.getAllCategories();
         return new ResponseEntity<StandardResponse>(
-                new StandardResponse(200,"All Categories: ",productCategoryDTOList), HttpStatus.ACCEPTED
+                new StandardResponse(200,"All Categories: ",productCategoryDTOList,0), HttpStatus.ACCEPTED
         );
     }
     @PostMapping("save_new_product_category")

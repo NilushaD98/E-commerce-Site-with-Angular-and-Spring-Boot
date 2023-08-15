@@ -73,6 +73,7 @@ public class ProductServiceIMPL implements ProductService {
     @Override
     public List<ProductDTO> getProcuctsCategoryVice(Long categoryId,int page, int size) {
         List<Product> productList = productRepo.getProductByCategoryId(categoryId,PageRequest.of(page,size));
+        long count = productRepo.count();
         return productList.stream().map(this::convertEntityToDTO).
                 collect(Collectors.toList());
     }
@@ -80,6 +81,7 @@ public class ProductServiceIMPL implements ProductService {
     @Override
     public List<ProductDTO> searchProductByName(String name, int page, int size) {
         List<Product> productList = productRepo.searchProductByName(name,PageRequest.of(page,size));
+        long count = productRepo.count();
         return productList.stream().map(this::convertEntityToDTO).collect(Collectors.toList());
     }
 
