@@ -12,7 +12,7 @@
                         <h1>{{ temp.name }}</h1>
                       </a>
                         <div class="price">{{ temp.unitPrice | currency:'USD' }}</div>
-                        <a href="#" class="primary-btn">Add To Cart</a>
+                        <button (click)="addToCart(temp)"  class="btn btn-primary btn-sm">Add To Cart</button>
                     </div>
                 </div>
               <div *ngIf="products.length == 0" class="alert alert-warning col-md-12" role="alert">

@@ -3,6 +3,8 @@ import { Product } from 'src/app/common/product';
 import { ProductService } from 'src/app/services/product.service';
 import { StandardResponse } from 'src/app/common/StandardResponse';
 import {ActivatedRoute} from "@angular/router";
+import {CartService} from "../../services/cart.service";
+import {CartItem} from "../../common/cart-item";
 
 @Component({
   selector: 'app-product-list',
@@ -20,6 +22,7 @@ export class ProductListComponent implements OnInit {
   theTotalElemants:number=1;
   constructor(
               private productService: ProductService,
+              private cartService: CartService,
               private route: ActivatedRoute
     ) {
   }
@@ -74,5 +77,10 @@ export class ProductListComponent implements OnInit {
         }
       }
     );
+  }
+  addToCart(theProduct: Product) {
+
+    const  theCartItem = new CartItem(theProduct);
+    this.cartService.addToCart(theCartItem);
   }
 }
