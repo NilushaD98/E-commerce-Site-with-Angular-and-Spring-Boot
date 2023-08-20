@@ -39,20 +39,32 @@ export class CartService {
 
   }
 
-  private computeCartTotal() {
+   computeCartTotal() {
     let totalPriceValue : number = 0;
-    let toatalQuantityValue: number = 0;
+    let totalQuantityValue: number = 0;
 
-    for(let curentCartItem of this.cartItem){
-      totalPriceValue += curentCartItem.quantity * curentCartItem.unitPrice;
-      toatalQuantityValue += curentCartItem.quantity;
+    for(let currentCartItem of this.cartItem){
+      totalPriceValue += currentCartItem.quantity * currentCartItem.unitPrice;
+      totalQuantityValue += currentCartItem.quantity;
     }
     this.totalPrice.next(totalPriceValue);
-    this.totalQuantity.next(toatalQuantityValue);
+    this.totalQuantity.next(totalQuantityValue);
 
-    for (let temp of this.cartItem){
-      console.log(temp)
+  }
+  decrementQuantity(tempCartItem: CartItem) {
+    tempCartItem.quantity --;
+    if(tempCartItem.quantity ==0){
+      this.remove(tempCartItem);
+    }else{
+      this.computeCartTotal();
     }
+  }
 
+  remove(tempCartItem: CartItem) {
+    const itemIndex = this.cartItem.findIndex(temp => temp.id === tempCartItem.id);
+    if(itemIndex> -1){
+      this.cartItem.splice(itemIndex,1);
+      this.computeCartTotal();
+    }
   }
 }
