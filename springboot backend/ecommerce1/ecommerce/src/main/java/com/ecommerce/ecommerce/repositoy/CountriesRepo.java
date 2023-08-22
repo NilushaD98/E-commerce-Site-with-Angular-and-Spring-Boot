@@ -1,18 +1,14 @@
 package com.ecommerce.ecommerce.repositoy;
 
 import com.ecommerce.ecommerce.Entity.Country;
+import com.google.common.base.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.stereotype.Repository;
 
-import java.util.List;
-import java.util.Optional;
-
 @Repository
 @EnableJpaRepositories
-public interface CountryRepo extends JpaRepository<Country,Integer> {
+public interface CountriesRepo extends JpaRepository<Country,Integer> {
+    Optional<Country> findByCodeEquals(String code);
 
-    @Query(value = "select id,code,name from country where code=?1",nativeQuery = true)
-    Optional<Country> findByCode(String code);
 }

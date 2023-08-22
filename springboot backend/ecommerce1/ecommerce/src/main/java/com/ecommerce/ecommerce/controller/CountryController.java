@@ -34,6 +34,7 @@ public class CountryController {
             params = {"code"}
     )
     public ResponseEntity<StandardResponse> getAllStatesByCode(@RequestParam(name = "code")String code) throws NotFoundException {
+        System.out.println(code);
         List<StateDTO> stateDTOList = countryService.getAllStatesByCode(code);
         return new ResponseEntity<StandardResponse>(
                 new StandardResponse(200,"All States By Code : ", stateDTOList,0),HttpStatus.OK

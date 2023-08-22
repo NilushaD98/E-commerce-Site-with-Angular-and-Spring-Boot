@@ -2,6 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import {FormBuilder, FormGroup} from "@angular/forms";
 import {Love2ShopFormService} from "../../services/love2-shop-form.service";
 import {mergeWith} from "rxjs";
+import {Country} from "../../common/country";
+import {State} from "../../common/state";
+import {StandardResponse} from "../../common/StandardResponse";
 
 @Component({
   selector: 'app-checkout',
@@ -16,6 +19,8 @@ export class CheckoutComponent implements OnInit {
   totalQuantity: number =0;
   creditCardYears: number[] = [];
   creditCardMonths: number[] =[];
+  countries: Country[] = [];
+  states: State[] =[];
   constructor(
     private formBuilder: FormBuilder,
     private love2ShopFormService:Love2ShopFormService
@@ -67,7 +72,13 @@ export class CheckoutComponent implements OnInit {
         this.creditCardYears = data;
       }
     )
-
+    this.love2ShopFormService.getAllCountries().subscribe(
+      (response:StandardResponse)=>{
+        if(response.code ===200){
+          this.countries = response.data as Country[];
+        }
+      }
+    );
   }
   onsubmit() {
     console.log(this.checkoutGroup.get('customer')?.value)
@@ -78,6 +89,7 @@ export class CheckoutComponent implements OnInit {
         const shippingAddress = this.checkoutGroup.get('shippingAddress') as FormGroup;
         const billingAddress = this.checkoutGroup.get('billingAddress') as FormGroup;
         billingAddress.patchValue(shippingAddress.value);
+
       } else {
         const billingAddress = this.checkoutGroup.get('billingAddress') as FormGroup;
         billingAddress.reset();
@@ -102,4 +114,17 @@ export class CheckoutComponent implements OnInit {
      }
    );
   }
+  getStates(formGroupName: string) {
+    console.log(formGroupName);
+    const formGroup = this.checkoutGroup.get('shippingAddress') as FormGroup;
+    const countryCode = formGroup.value.country.code;
+    this.love2ShopFormService.getStatesByCode(countryCode).subscribe(
+      (response: StandardResponse)=>{
+        if(response.code === 200){
+          this.states = response.data as State[];
+        }
+      }
+    );
+  }
+  protected readonly State = State;
 }
