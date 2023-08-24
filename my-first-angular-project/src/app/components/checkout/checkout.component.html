@@ -10,18 +10,45 @@
               <div class="col-md-9">
                 <div class="input-space">
                   <input formControlName="firstName" type="text">
+                  <div *ngIf="checkoutGroup.get('customer.firstName')?.hasError('required')&& (checkoutGroup.get('customer.firstName')?.dirty || checkoutGroup.get('customer.firstName')?.touched)" class="alert alert-danger">
+                    First Name is Required
+                  </div>
+                  <div *ngIf="checkoutGroup.get('customer.firstName')?.hasError('minlength') && (checkoutGroup.get('customer.firstName')?.dirty || checkoutGroup.get('customer.firstName')?.touched)" class="alert alert-danger ">
+                    First Name must be at least 2 characters
+                  </div>
+                  <div *ngIf="checkoutGroup.get('customer.firstName')?.hasError('notOnlyWhiteSpace') && (checkoutGroup.get('customer.firstName')?.dirty || checkoutGroup.get('customer.firstName')?.touched)" class="alert alert-danger" class="alert alert-danger">
+                    First Name cannot be only whitespace
+                  </div>
                 </div>
               </div>
             <div class="col-md-2"><label>LastName</label></div>
               <div class="col-md-9">
                 <div class="input-space">
                   <input formControlName="lastName" type="text">
+                  <div *ngIf="checkoutGroup.get('customer.lastName')?.hasError('required')&& (checkoutGroup.get('customer.lastName')?.dirty || checkoutGroup.get('customer.lastName')?.touched)" class="alert alert-danger">
+                    Last Name is Required
+                  </div>
+                  <div *ngIf="checkoutGroup.get('customer.lastName')?.hasError('minlength') && (checkoutGroup.get('customer.lastName')?.dirty || checkoutGroup.get('customer.lastName')?.touched)" class="alert alert-danger ">
+                    Last Name must be at least 2 characters
+                  </div>
+                  <div *ngIf="checkoutGroup.get('customer.lastName')?.hasError('notOnlyWhiteSpace') && (checkoutGroup.get('customer.lastName')?.dirty || checkoutGroup.get('customer.lastName')?.touched)" class="alert alert-danger" class="alert alert-danger">
+                    Last Name cannot be only whitespace
+                  </div>
                 </div>
               </div>
             <div class="col-md-2"><label>E-Mail</label></div>
               <div class="col-md-9">
                 <div class="input-space">
                   <input formControlName="email" type="text">
+                  <div *ngIf="checkoutGroup.get('customer.email')?.hasError('required')&& (checkoutGroup.get('customer.email')?.dirty || checkoutGroup.get('customer.email')?.touched)" class="alert alert-danger">
+                    Email is Required
+                  </div>
+                  <div *ngIf="checkoutGroup.get('customer.email')?.hasError('pattern')" class="alert alert-danger">
+                    Email not Valid
+                  </div>
+                  <div *ngIf="checkoutGroup.get('customer.email')?.hasError('notOnlyWhiteSpace') && (checkoutGroup.get('customer.email')?.dirty || checkoutGroup.get('customer.email')?.touched)" class="alert alert-danger">
+                    Email cannot be only whitespace
+                  </div>
                 </div>
               </div>
             </div>
@@ -34,7 +61,7 @@
             <div class="col-md-9">
               <div class="input-space">
                <select formControlName = "country" (change)="getStates('shippingAddress')">
-                 <option *ngFor="let tempcountry of countries" [ngValue]="tempcountry">{{tempcountry.name}}</option>
+                 <option *ngFor="let tempCountry of countries" [ngValue]="tempCountry">{{tempCountry.name}}</option>
                </select>
               </div>
             </div>
@@ -42,12 +69,24 @@
             <div class="col-md-9">
               <div class="input-space">
                 <input formControlName="street" type="text">
+                <div *ngIf="checkoutGroup.get('shippingAddress.street')?.hasError('required')&& (checkoutGroup.get('shippingAddress.street')?.dirty || checkoutGroup.get('shippingAddress.street')?.touched)" class="alert alert-danger">
+                  Street is Required
+                </div>
+                <div *ngIf="checkoutGroup.get('shippingAddress.street')?.hasError('notOnlyWhiteSpace') && (checkoutGroup.get('shippingAddress.street')?.dirty || checkoutGroup.get('shippingAddress.street')?.touched)" class="alert alert-danger" class="alert alert-danger">
+                  Street cannot be only whitespace
+                </div>
               </div>
             </div>
             <div class="col-md-2"><label>City</label></div>
             <div class="col-md-9">
               <div class="input-space">
                 <input formControlName="city" type="text">
+                <div *ngIf="checkoutGroup.get('shippingAddress.city')?.hasError('required')&& (checkoutGroup.get('shippingAddress.city')?.dirty || checkoutGroup.get('shippingAddress.city')?.touched)" class="alert alert-danger">
+                  City is Required
+                </div>
+                <div *ngIf="checkoutGroup.get('shippingAddress.city')?.hasError('notOnlyWhiteSpace') && (checkoutGroup.get('shippingAddress.city')?.dirty || checkoutGroup.get('shippingAddress.city')?.touched)" class="alert alert-danger" class="alert alert-danger">
+                  City cannot be only whitespace
+                </div>
               </div>
             </div>
             <div class="col-md-2"><label>State</label></div>
@@ -62,6 +101,15 @@
             <div class="col-md-9">
               <div class="input-space">
                 <input formControlName="zipCode" type="text">
+                <div *ngIf="checkoutGroup.get('shippingAddress.zipCode')?.hasError('required')&& (checkoutGroup.get('shippingAddress.zipCode')?.dirty || checkoutGroup.get('shippingAddress.zipCode')?.touched)" class="alert alert-danger">
+                  ZipCode is Required
+                </div>
+                <div *ngIf="checkoutGroup.get('shippingAddress.zipCode')?.hasError('notOnlyWhiteSpace') && (checkoutGroup.get('shippingAddress.zipCode')?.dirty || checkoutGroup.get('shippingAddress.zipCode')?.touched)" class="alert alert-danger" class="alert alert-danger">
+                  ZipCode cannot be only whitespace
+                </div>
+                <div *ngIf="checkoutGroup.get('shippingAddress.zipCode')?.hasError('pattern') && (checkoutGroup.get('shippingAddress.zipCode')?.dirty || checkoutGroup.get('shippingAddress.zipCode')?.touched)" class="alert alert-danger" class="alert alert-danger">
+                  ZipCode Not Valid
+                </div>
               </div>
             </div>
           </div>
@@ -81,7 +129,7 @@
             <div class="col-md-9">
               <div class="input-space">
                 <select formControlName = "country" (change)="getStates('shippingAddress')">
-                  <option *ngFor="let tempcountry of countries" [ngValue]="tempcountry">{{tempcountry.name}}</option>
+                  <option *ngFor="let tempCountry of countries" [ngValue]="tempCountry">{{tempCountry.name}}</option>
                </select>
               </div>
             </div>
@@ -89,12 +137,24 @@
             <div class="col-md-9">
               <div class="input-space">
                 <input formControlName="street" type="text">
+                <div *ngIf="checkoutGroup.get('billingAddress.street')?.hasError('required')&& (checkoutGroup.get('billingAddress.street')?.dirty || checkoutGroup.get('billingAddress.street')?.touched)" class="alert alert-danger">
+                  Street is Required
+                </div>
+                <div *ngIf="checkoutGroup.get('billingAddress.street')?.hasError('notOnlyWhiteSpace') && (checkoutGroup.get('billingAddress.street')?.dirty || checkoutGroup.get('billingAddress.street')?.touched)" class="alert alert-danger" class="alert alert-danger">
+                  Street cannot be only whitespace
+                </div>
               </div>
             </div>
             <div class="col-md-2"><label>City</label></div>
             <div class="col-md-9">
               <div class="input-space">
                 <input formControlName="city" type="text">
+                <div *ngIf="checkoutGroup.get('billingAddress.city')?.hasError('required')&& (checkoutGroup.get('billingAddress.city')?.dirty || checkoutGroup.get('billingAddress.city')?.touched)" class="alert alert-danger">
+                  City is Required
+                </div>
+                <div *ngIf="checkoutGroup.get('billingAddress.city')?.hasError('notOnlyWhiteSpace') && (checkoutGroup.get('billingAddress.city')?.dirty || checkoutGroup.get('billingAddress.city')?.touched)" class="alert alert-danger" class="alert alert-danger">
+                  City cannot be only whitespace
+                </div>
               </div>
             </div>
             <div class="col-md-2"><label>State</label></div>
@@ -109,6 +169,15 @@
             <div class="col-md-9">
               <div class="input-space">
                 <input formControlName="zipCode" type="text">
+                <div *ngIf="checkoutGroup.get('billingAddress.zipCode')?.hasError('required')&& (checkoutGroup.get('billingAddress.zipCode')?.dirty || checkoutGroup.get('billingAddress.zipCode')?.touched)" class="alert alert-danger">
+                  ZipCode is Required
+                </div>
+                <div *ngIf="checkoutGroup.get('billingAddress.zipCode')?.hasError('notOnlyWhiteSpace') && (checkoutGroup.get('billingAddress.zipCode')?.dirty || checkoutGroup.get('billingAddress.zipCode')?.touched)" class="alert alert-danger" class="alert alert-danger">
+                  ZipCode cannot be only whitespace
+                </div>
+                <div *ngIf="checkoutGroup.get('billingAddress.zipCode')?.hasError('pattern') && (checkoutGroup.get('billingAddress.zipCode')?.dirty || checkoutGroup.get('billingAddress.zipCode')?.touched)" class="alert alert-danger" class="alert alert-danger">
+                  ZipCode Not Valid
+                </div>
               </div>
             </div>
           </div>
@@ -131,18 +200,42 @@
             <div class="col-md-9">
               <div class="input-space">
                 <input formControlName="nameOnCard" type="text">
+                <div *ngIf="checkoutGroup.get('creditCard.nameOnCard')?.hasError('required')&& (checkoutGroup.get('creditCard.nameOnCard')?.dirty || checkoutGroup.get('creditCard.nameOnCard')?.touched)" class="alert alert-danger">
+                  Card Name is Required
+                </div>
+                <div *ngIf="checkoutGroup.get('creditCard.nameOnCard')?.hasError('notOnlyWhiteSpace') && (checkoutGroup.get('creditCard.nameOnCard')?.dirty || checkoutGroup.get('creditCard.nameOnCard')?.touched)" class="alert alert-danger" class="alert alert-danger">
+                  Card Name cannot be only whitespace
+                </div>
               </div>
             </div>
             <div class="col-md-2"><label>Card Number</label></div>
             <div class="col-md-9">
               <div class="input-space">
                 <input formControlName="cardNumber" type="text">
+                <div *ngIf="checkoutGroup.get('creditCard.cardNumber')?.hasError('required')&& (checkoutGroup.get('creditCard.cardNumber')?.dirty || checkoutGroup.get('creditCard.cardNumber')?.touched)" class="alert alert-danger">
+                  Card Number is Required
+                </div>
+                <div *ngIf="checkoutGroup.get('creditCard.cardNumber')?.hasError('notOnlyWhiteSpace') && (checkoutGroup.get('creditCard.cardNumber')?.dirty || checkoutGroup.get('creditCard.cardNumber')?.touched)" class="alert alert-danger" class="alert alert-danger">
+                  Card Number cannot be only whitespace
+                </div>
+                <div *ngIf="checkoutGroup.get('creditCard.cardNumber')?.hasError('pattern') && (checkoutGroup.get('creditCard.cardNumber')?.dirty || checkoutGroup.get('creditCard.cardNumber')?.touched)" class="alert alert-danger" class="alert alert-danger">
+                  Card Number not valid
+                </div>
               </div>
             </div>
             <div class="col-md-2"><label>Security Code</label></div>
             <div class="col-md-9">
               <div class="input-space">
                 <input formControlName="securityCode" type="text">
+                <div *ngIf="checkoutGroup.get('creditCard.securityCode')?.hasError('required')&& (checkoutGroup.get('creditCard.securityCode')?.dirty || checkoutGroup.get('creditCard.securityCode')?.touched)" class="alert alert-danger">
+                  Security Code is Required
+                </div>
+                <div *ngIf="checkoutGroup.get('creditCard.securityCode')?.hasError('notOnlyWhiteSpace') && (checkoutGroup.get('creditCard.securityCode')?.dirty || checkoutGroup.get('creditCard.securityCode')?.touched)" class="alert alert-danger" class="alert alert-danger">
+                  Security Code cannot be only whitespace
+                </div>
+                <div *ngIf="checkoutGroup.get('creditCard.securityCode')?.hasError('pattern') && (checkoutGroup.get('creditCard.securityCode')?.dirty || checkoutGroup.get('creditCard.securityCode')?.touched)" class="alert alert-danger" class="alert alert-danger">
+                  Security Code not valid
+                </div>
               </div>
             </div>
 

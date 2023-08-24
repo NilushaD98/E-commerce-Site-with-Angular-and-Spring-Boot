@@ -1,6 +1,5 @@
 package com.ecommerce.ecommerce.Entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -44,6 +43,8 @@ public class Product {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "category_id",nullable = false)// Add this annotation to break the circular reference
     private ProductCategory category;
+    @OneToOne(mappedBy = "product")
+    private OrderItem orderItem;
 
     public Product(String sku, String name, String description, BigDecimal unitPrice, String imageURL, boolean activeStatus, int unitInStock, Date dateCreated, Date lastUpdate, ProductCategory category) {
         this.sku = sku;
