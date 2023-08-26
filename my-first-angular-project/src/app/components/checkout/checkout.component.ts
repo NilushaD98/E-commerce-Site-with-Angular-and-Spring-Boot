@@ -7,6 +7,11 @@ import {State} from "../../common/state";
 import {StandardResponse} from "../../common/StandardResponse";
 import {Luv2shopValidators} from "../../validators/luv2shop-validators";
 import {CartService} from "../../services/cart.service";
+import {Order} from "../../common/order";
+import {OrderItem} from "../../common/order-item";
+import {Address} from "../../common/address";
+import {Customer} from "../../common/customer";
+import {CheckoutService} from "../../services/checkout.service";
 
 @Component({
   selector: 'app-checkout',
@@ -26,7 +31,8 @@ export class CheckoutComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private love2ShopFormService:Love2ShopFormService,
-    private cartService: CartService
+    private cartService: CartService,
+    private checkOutService:CheckoutService
   ) {
   }
 
@@ -90,6 +96,57 @@ export class CheckoutComponent implements OnInit {
     if(this.checkoutGroup.invalid){
       this.checkoutGroup.markAllAsTouched();
     }
+    const cartItems = this.cartService.cartItem;
+    let orderItems: OrderItem[] = [];
+    for (let i = 0; i < cartItems.length; i++) {
+      const cartItem = cartItems[i];
+      const orderItem: OrderItem = new OrderItem(
+        cartItem.id,
+        cartItem.imageURL,
+        cartItem.unitPrice,
+        cartItem.quantity
+      );
+      orderItems.push(orderItem);
+    }
+    const customer = this.checkoutGroup.get('customer') as FormGroup;
+    const customer1 = new Customer(
+      customer.value.firstName,
+      customer.value.lastName,
+      customer.value.email
+    );
+    const shipping_address = this.checkoutGroup.get('shippingAddress') as FormGroup;
+    const ship_address = new Address(
+      shipping_address.value.street,
+      shipping_address.value.city,
+      shipping_address.value.state.name,
+      shipping_address.value.country.name,
+      shipping_address.value.zipCode
+    );
+    const billing_address = this.checkoutGroup.get('billingAddress')as FormGroup;
+    const bill_address = new Address(
+      billing_address.value.street,
+      billing_address.value.city,
+      billing_address.value.state.name,
+      billing_address.value.country.name,
+      billing_address.value.zipCode
+    );
+
+    const order = new Order(
+      this.totalQuantity,
+      this.totalPrice,
+      customer1,
+      ship_address,
+      bill_address,
+      orderItems
+    );
+    this.checkOutService.placeOrder(order).subscribe(
+      (response:StandardResponse)=>{
+        if(response.code === 200){
+          console.log(response.data);
+        }
+      }
+    );
+
   }
   copyShippingAddressToBillingAddress($event: Event) {
     if ($event.target instanceof HTMLInputElement) {

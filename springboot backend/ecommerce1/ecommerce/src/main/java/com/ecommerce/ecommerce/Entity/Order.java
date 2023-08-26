@@ -42,4 +42,15 @@ public class Order {
     @OneToMany(mappedBy = "order")
     private List<OrderItem> orderItemList;
 
+    public Order(String orderTrackingNumber, int totalQuantity, BigDecimal totalPrice, ShippingAddress shipping_address, BillingAddress billing_address, boolean status, Date dateCreated, Date lastUpdated, Customer customer) {
+        this.orderTrackingNumber = orderTrackingNumber;
+        this.totalQuantity = totalQuantity;
+        this.totalPrice = totalPrice;
+        this.shipping_address = shipping_address;
+        this.billing_address = billing_address;
+        this.status = status;
+        this.dateCreated = dateCreated;
+        this.lastUpdated = lastUpdated;
+        this.customer = customer;
+    }
 }

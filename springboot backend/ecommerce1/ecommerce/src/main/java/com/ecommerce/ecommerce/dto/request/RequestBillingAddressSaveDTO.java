@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-public class RequestBilllingAddressSaveDTO {
+public class RequestBillingAddressSaveDTO {
     private String street;
     private String city;
     private String state;

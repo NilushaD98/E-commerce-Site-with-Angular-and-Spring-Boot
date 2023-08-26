@@ -10,13 +10,10 @@ import com.ecommerce.ecommerce.service.ProductService;
 import com.ecommerce.ecommerce.util.mapper.ProductMapper;
 import javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.awt.print.Pageable;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;

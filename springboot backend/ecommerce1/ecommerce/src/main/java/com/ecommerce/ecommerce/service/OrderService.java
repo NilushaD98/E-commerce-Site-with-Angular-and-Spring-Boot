@@ -1,2 +1,7 @@
-package com.ecommerce.ecommerce.service;public interface OrderService {
+package com.ecommerce.ecommerce.service;
+
+import com.ecommerce.ecommerce.dto.request.RequestOrderSaveDTO;
+
+public interface OrderService {
+    String saveOrder(RequestOrderSaveDTO requestOrderSaveDTO);
 }

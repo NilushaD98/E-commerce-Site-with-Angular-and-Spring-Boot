@@ -8,7 +8,7 @@ import javax.persistence.*;
 import java.util.List;
 
 @Entity
-@Table(name = "address")
+@Table(name = "billing_address")
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
@@ -28,4 +28,12 @@ public class BillingAddress {
     private String zipCode;
     @OneToMany(mappedBy = "billing_address")
     private List<Order> orderList;
+
+    public BillingAddress(String street, String city, String state, String country, String zipCode) {
+        this.street = street;
+        this.city = city;
+        this.state = state;
+        this.country = country;
+        this.zipCode = zipCode;
+    }
 }

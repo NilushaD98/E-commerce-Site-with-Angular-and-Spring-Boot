@@ -27,4 +27,9 @@ public class Customer {
     @OneToMany(mappedBy = "customer")
     private List<Order> orders;
 
+    public Customer(String firstName, String lastName, String email) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+    }
 }

@@ -1,7 +1,6 @@
 package com.ecommerce.ecommerce.service.serviceIMPL;
 
 import com.ecommerce.ecommerce.Entity.Country;
-import com.ecommerce.ecommerce.Entity.Product;
 import com.ecommerce.ecommerce.Entity.State;
 import com.ecommerce.ecommerce.dto.CountryDTO;
 import com.ecommerce.ecommerce.dto.StateDTO;
