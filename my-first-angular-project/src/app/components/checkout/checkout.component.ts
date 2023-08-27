@@ -12,6 +12,7 @@ import {OrderItem} from "../../common/order-item";
 import {Address} from "../../common/address";
 import {Customer} from "../../common/customer";
 import {CheckoutService} from "../../services/checkout.service";
+import {Router, Routes} from "@angular/router";
 
 @Component({
   selector: 'app-checkout',
@@ -32,7 +33,8 @@ export class CheckoutComponent implements OnInit {
     private formBuilder: FormBuilder,
     private love2ShopFormService:Love2ShopFormService,
     private cartService: CartService,
-    private checkOutService:CheckoutService
+    private checkOutService:CheckoutService,
+    private route:Router
   ) {
   }
 
@@ -71,10 +73,8 @@ export class CheckoutComponent implements OnInit {
     });
 
     const startMonth:number = new Date().getMonth() +1;
-    console.log(startMonth);
     this.love2ShopFormService.getCreditCardMonth(startMonth).subscribe(
       data =>{
-        console.log(data);
         JSON.stringify(data);
         this.creditCardMonths = data;
       }
@@ -142,7 +142,10 @@ export class CheckoutComponent implements OnInit {
     this.checkOutService.placeOrder(order).subscribe(
       (response:StandardResponse)=>{
         if(response.code === 200){
-          console.log(response.data);
+          alert(`Your Order is Confirmed.\nTracking Number :${response.data}`)
+          this.resetCart();
+        }else {
+          alert('Order Not Confirmed.')
         }
       }
     );
@@ -180,7 +183,6 @@ export class CheckoutComponent implements OnInit {
    );
   }
   getStates(formGroupName: string) {
-    console.log(formGroupName);
     const formGroup = this.checkoutGroup.get('shippingAddress') as FormGroup;
     const countryCode = formGroup.value.country.code;
     this.love2ShopFormService.getStatesByCode(countryCode).subscribe(
@@ -200,5 +202,13 @@ export class CheckoutComponent implements OnInit {
     this.cartService.totalPrice.subscribe(
       totalPrice => this.totalPrice = totalPrice
     );
+  }
+
+  private resetCart() {
+    this.cartService.totalQuantity.next(0);
+    this.cartService.totalPrice.next(0);
+    this.cartService.cartItem = [];
+    this.checkoutGroup.reset();
+    this.route.navigateByUrl('/products');
   }
 }

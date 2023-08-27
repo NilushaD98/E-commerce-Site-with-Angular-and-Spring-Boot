@@ -52,7 +52,6 @@ export class ProductListComponent implements OnInit {
      this.productService.getProductLit(this.thePageNumber-1,this.thePageSize,this.currenCategoryID).subscribe(
        (response: StandardResponse) => {
          if (response.code === 200) {
-           console.log(response.allElemants)
            this.theTotalElemants =response.allElemants
            this.products = response.data as Product[];
          } else {

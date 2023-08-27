@@ -70,7 +70,7 @@ public class OrderServiceIMPL implements OrderService {
                         customer
                 );
                 orderRepo.save(order);
-                orderId = order.getId();
+                orderId = order.getOrder_id();
                 String trackingNumber = order.getOrderTrackingNumber();
                 if(requestOrderSaveDTO.getOrderItemSaveDTOList().size()>0){
                     try{
@@ -79,7 +79,7 @@ public class OrderServiceIMPL implements OrderService {
                                 .map(this::DTOTOEntity)
                                 .collect(Collectors.toList());
                         orderItemRepo.saveAll(orderItemList);
-                        return "Order Saved : "+trackingNumber;
+                        return trackingNumber;
                     }
                     catch (Exception e){
                         System.out.println(e);

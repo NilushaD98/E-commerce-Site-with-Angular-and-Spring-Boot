@@ -17,7 +17,8 @@ import java.util.List;
 public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+    @Column(name = "order_id",nullable = false)
+    private Long order_id;
     @Column(name = "order_trcking_number",nullable = false)
     private String orderTrackingNumber;
     @Column(name = "total_quantity",nullable = false)
